@@ -333,12 +333,6 @@ LOCAL_REQUIRED_MODULES += \
 # genrule modules aren't installable, so LOCAL_REQUIRED_MODULES doesn't work.
 # Instead, use LOCAL_ADDITIONAL_DEPENDENCIES with intermediate output
 LOCAL_ADDITIONAL_DEPENDENCIES += $(call intermediates-dir-for,ETC,sepolicy_test)/sepolicy_test
-
-ifeq ($(PRODUCT_SEPOLICY_SPLIT),true)
-LOCAL_REQUIRED_MODULES += \
-    $(addprefix treble_sepolicy_tests_,$(PLATFORM_SEPOLICY_COMPAT_VERSIONS)) \
-
-endif  # PRODUCT_SEPOLICY_SPLIT
 endif  # SELINUX_IGNORE_NEVERALLOWS
 endif  # with_asan
 
@@ -671,11 +665,6 @@ built_product_sepolicy    := $(call intermediates-dir-for,ETC,base_product_sepol
 base_plat_pub_policy.cil      := $(call intermediates-dir-for,ETC,base_plat_pub_policy.cil)/base_plat_pub_policy.cil
 base_system_ext_pub_polcy.cil := $(call intermediates-dir-for,ETC,base_system_ext_pub_polcy.cil)/base_system_ext_pub_polcy.cil
 base_product_pub_policy.cil   := $(call intermediates-dir-for,ETC,base_product_pub_policy.cil)/base_product_pub_policy.cil
-
-$(foreach v,$(PLATFORM_SEPOLICY_COMPAT_VERSIONS), \
-  $(eval version_under_treble_tests := $(v)) \
-  $(eval include $(LOCAL_PATH)/treble_sepolicy_tests_for_release.mk) \
-)
 endif  # PRODUCT_SEPOLICY_SPLIT
 
 built_plat_sepolicy :=
