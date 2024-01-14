@@ -1040,10 +1040,12 @@ allow system_server block_device:dir search;
 allow system_server frp_block_device:blk_file rw_file_perms;
 allowxperm system_server frp_block_device:blk_file ioctl { BLKSECDISCARD BLKDISCARD };
 
-# Create new process groups and clean up old cgroups
-allow system_server cgroup:dir { remove_name rmdir };
+# Allow system server to create new and clean up old cgroups
+allow system_server cgroup:dir create_dir_perms;
+allow system_server cgroup:file { rw_file_perms setattr };
 allow system_server cgroup_v2:dir create_dir_perms;
-allow system_server cgroup_v2:file { r_file_perms setattr };
+allow system_server cgroup_v2:file { rw_file_perms setattr };
+allow system_server audioserver_tmpfs:file rw_file_perms;
 
 # /oem access
 r_dir_file(system_server, oemfs)
